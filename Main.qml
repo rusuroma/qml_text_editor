@@ -13,6 +13,7 @@ ApplicationWindow {
     title: qsTr("Hello World")
 
     property variant indexes: []
+    property string bold_text: ""
 
     About
     {
@@ -219,6 +220,7 @@ ApplicationWindow {
 
     }
 
+
     Action
     {
         id: actionMakeBold
@@ -227,7 +229,42 @@ ApplicationWindow {
         icon.source: "icons/oBold.png"
         onTriggered:
         {
-            editor.font.bold = !editor.font.bold
+            if(editor.selectedText.length > 0)
+            {
+                bold_text = " <b>" + editor.getText(editor.selectionStart, editor.selectionEnd) + "</b> "
+                editor.remove(editor.selectionStart, editor.selectionEnd)
+                editor.insert(editor.cursorPosition, bold_text)
+                editor.cursorPosition = editor.length + 1
+
+            }else
+            {
+              editor.font.bold = !editor.font.bold
+            }
+
+        }
+
+    }
+
+    Action
+    {
+        id: actionMakeUnBold
+        text: qsTr("UnBold")
+        icon.color: "transparent"
+        icon.source: "icons/oUnBold.png"
+        onTriggered:
+        {
+            if(editor.selectedText.length > 0)
+            {
+                var myVAr = editor.getText(editor.selectionStart, editor.selectionEnd)
+                editor.remove(editor.selectionStart, editor.selectionEnd)
+                editor.insert(editor.cursorPosition, myVAr)
+                editor.cursorPosition = editor.length + 1
+
+            }else
+            {
+              editor.font.bold = !editor.font.bold
+            }
+
         }
 
     }
@@ -314,6 +351,10 @@ ApplicationWindow {
             {
                 action: actionMakeBold
             }
+            MenuItem
+            {
+                action: actionMakeUnBold
+            }
         }
 
         Menu
@@ -367,6 +408,8 @@ ApplicationWindow {
             id: editor
             selectByMouse: true
             persistentSelection: true
+            wrapMode: TextEdit.Wrap
+            textFormat: TextEdit.RichText
 
         }
     }
@@ -467,7 +510,6 @@ ApplicationWindow {
             Button
             {
                 id: searchBtnPopUp
-                //x: searchLbl.x/2 + closeSearchPopUp.width/2
                 width: searchPopup.width/5
                 height: searchPopup.height/6
                 text: "Search"
@@ -480,15 +522,11 @@ ApplicationWindow {
                     {
                         indexes = JSFunction.searchInText(editor.text, searchField.text)
                         console.log(indexes)
-                        // editor.selectionStart = index[0];
-                        // editor.selectionEnd = index[1];
                         editor.select(indexes[0], indexes[1])
                     }else
                     {
                         indexes = JSFunction.searchInText(editor.text, searchField.text, indexes[1])
                         console.log(indexes)
-                        // editor.selectionStart = index[0];
-                        // editor.selectionEnd = index[1];
                         editor.select(indexes[0], indexes[1])
                     }
 

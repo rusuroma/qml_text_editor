@@ -21,7 +21,7 @@ qt_add_qml_module(appTextEditor
     SOURCES backend.h backend.cpp
     RESOURCES icons/oUndo.png icons/oRedo.png icons/oSelectAll.png icons/oHelp.png icons/oAbout.png
     SOURCES about.h about.cpp
-    RESOURCES  icons/oSearch.png icons/oFontDown.png icons/oFontUp.png icons/oBold.png
+    RESOURCES  icons/oSearch.png icons/oFontDown.png icons/oFontUp.png icons/oBold.png icons/oUnBold.png
     QML_FILES frontend_functionality.js
 )
 

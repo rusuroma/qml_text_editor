@@ -20,3 +20,5 @@ function searchInText(text, searchString, start_index=0){
     return [selectionStart, selectionEnd];
 }
 
+
+
